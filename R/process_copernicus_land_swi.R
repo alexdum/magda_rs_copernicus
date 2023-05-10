@@ -62,7 +62,7 @@ ctry_longname <- function(ctry) {
 
 for (i in 1:length(files_final)) {
   # fromateaza data
-  day <- strsplit(files_final[i], "1km_|_CEURO")[[1]][5] %>% substr(1,8) %>% as.Date("%Y%m%d")
+  day <- strsplit(files_final[i], "1km_|_CEURO")[[1]][5] %>% substr(1,12) %>% as.POSIXct("%Y%m%d%H%M", tz = "UTC")
   print(day)
   # incepe procesarea
   r <- rast(files_final[i])
@@ -95,7 +95,7 @@ for (i in 1:length(files_final)) {
       # plot(as_Spatial(ctry_utm), add = T)
       # summary(minmax(r_utm)[2,])
       # summary(minmax(r_utm)[1,])
-      file_name <- paste0(names(r_utm[[names_r]]) %>% gsub("_","",.), "_", gsub("-","", day), "XXXX")
+      file_name <- paste0(names(r_utm[[names_r]]) %>% gsub("_","",.), "_", format(day, "%Y%m%d%H%M"))
       file_path <- paste0("grids/SWI/",names(exts[e]),"/", format(day, "%Y"))
       if (!dir.exists(file_path)) dir.create(file_path, recursive = T)
       writeRaster(r_utm[[names_r]], paste0(file_path,"/", file_name, ".tif"), overwrite = T)
