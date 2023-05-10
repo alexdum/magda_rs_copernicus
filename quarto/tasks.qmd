@@ -1,0 +1,39 @@
+---
+title: "tasks"
+format: html
+editor: visual
+---
+
+## Tasks
+
+Hi Alexandru,
+
+ 
+
+As discussed on slack, we changed the projections for each site to the following:
+
+**Italy pilot site à WGS84 / UTM zone 32N \[EPSG:32632\]**
+
+**France pilot site à WGS84 / UTM zone 31N \[EPSG:32631\]**
+
+**Romania pilot site à WGS84 / UTM zone 35N \[EPSG:32635\]**
+
+The ROI shapefiles will be put in the right projection again on the FTP.
+
+Furthermore, we are doing a soil moisture test with our Hydrological model.
+
+For this we have requested the following datasets earlier to be put onto the FTP:
+
+The timeframe we want to test the model in is Jan-2015 to Dec-2022.  
+
+### Surface Soil Moisture -- SSM (CGLS) - done
+
+### NDVI (CGLS) - done
+
+### Soil Water Index -- SWI (CGLS)
+
+### Surface Soil Moisture; ASCAT-B-NRT-O12.5 (H16)
+
+### Root Zone Soil Moisture; RZSM-ASCAT-NRT-10 (H26)
+
+### 

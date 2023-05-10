@@ -1,0 +1,45 @@
+---
+title: "Processed remote sensing data"
+format: pdf
+toc: true
+editor: visual
+---
+
+## Data processed
+
+Data provided in the specific country's UTM projection, in GeoTIFF format file.
+
+### Surface Soil Moisture -- SSM (CGLS)
+
+Spatial resolution: $1km^2$
+
+Temporal resolution: daily
+
+Units: %
+
+Varname: ssm
+
+Product User Manual: <https://land.copernicus.eu/global/sites/cgls.vito.be/files/products/CGLOPS1_PUM_SSM1km-V1_I1.30.pdf>
+
+There is no detailed info available regarding the time acquisition of the data; only the day of scanning is available in the files' metadata; I updated the naming convention accordingly, as YYYY-MM-DD-XX.tif
+
+
+### Normalized Diference Vegetation Index - NDVI (CGLS)
+
+Spatial resolution: $300m^2$
+
+Temporal resolution: day 1, day 11 and day 21 of each month.; the corresponding accumulation period covers 30 days up to the 10th, 20th and last day of the month.
+
+Units: unitless
+
+Varname: ndvi
+
+Product User Manual: <https://land.copernicus.eu/global/sites/cgls.vito.be/files/products/CGLOPS1_PUM_NDVI300m-V2_I1.20.pdf>
+
+There is no detailed info available regarding the time acquisition of the data; only the day of scanning is available in the files' metadata; I updated the naming convention accordingly, as YYYY-MM-DD-XX.tif
+
+Until Jun/2020 the product is derived from PROBA-V C1 S10 products, with incorporation of the Status Map and land mask.
+
+From Jul/2020 onwards the product is derived from sngular corrected composite, derived from Sentinel-3 OLCI data, with a 30-days composite window, updated every 10 days using a sliding window. The normalized TOC reflectances from OLCI bands 7, 8, 9 and 10 are averaged to a meanRED reflectance and the OLCI bands 16, 17 and 18 are averaged to a meanNIR reflectance prior to NDVI computation.
+
+
