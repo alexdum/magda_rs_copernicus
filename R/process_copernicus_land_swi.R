@@ -1,6 +1,7 @@
 library(terra)
 #library(sf)
 library(dplyr)
+library(RCurl)
 setwd("~/magda_rs_copernicus")
 #tab <- read.table("https://land.copernicus.vgt.vito.be/manifest/swi_v1_1km/manifest_cgls_swi_v1_1km_20230504.txt")
 # write without auxiliary file
@@ -69,9 +70,9 @@ for (i in 1:length(files_final)) {
   
   # pentru fiecare zona
   for (e in 1:length(exts)) {
-    
-    r.sub <- crop(r, exts[[e]]) * 0.5
-    r.sub[r.sub %in% c(241, 242, 251, 252, 253, 254)] <- NA
+    # transformarea de scare se face automat - se pare
+    r.sub <- crop(r, exts[[e]]) #* 0.5
+    #r.sub[r.sub %in% c(241, 242, 251, 252, 253, 254)] <- NA
     
     # ctry_utm <-  vect(paste0("shp/",names(exts[e]),"_L1_roi.shp"))
     # print(show( ctry_utm ))
@@ -110,7 +111,34 @@ for (i in 1:length(files_final)) {
   }
 }
 
+
+
+ctry <- c("fr","it","ro")
+
+for (i in 1:length(ctry)) {
+  
+
+  if (ctry[i] == "fr") {
+    ctry_long <- "France"
+  } else if (ctry[i] == "it") {
+    ctry_long <- "Italy"
+  } else {
+    ctry_long <- "Romania"
+  }
+  
+  print(c(ctry[i], ctry_longname))
+  system(paste0("zip -r  grids/SWI/",ctry[i], ".zip grids/SWI/",ctry[i]))
+  
+  RCurl::ftpUpload(
+    paste0("grids/SWI/",ctry[i], ".zip"),
+    paste0("ftp://213.127.133.58/MAGDA/input/",ctry_long,"/Dynamic/RS/SWI/",ctry[i], ".zip"),
+    userpwd = "MAGDA:FW@MAGDA_RS"
+  )
+}
+
 # # upload to ftp
+
+
 # system('rsync -avu --delete /home/rstudio/magda_rs_copernicus/grids/SWI/fr/  /mnt/Z//MAGDA/input/France/Dynamic/RS/SWI')  
 # system('rsync -avu --delete /home/rstudio/magda_rs_copernicus/grids/SWI/ro/  /home/rstudio/fw_ftp/MAGDA/input/Romania/Dynamic/RS/SWI')
 # system('rsync -avu --delete /home/rstudio/magda_rs_copernicus/grids/SWI/it/  /home/rstudio/fw_ftp/MAGDA/input/Italia/Dynamic/RS/SWI')
