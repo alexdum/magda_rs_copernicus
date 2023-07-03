@@ -126,7 +126,7 @@ for (i in 1:length(ctry)) {
     ctry_long <- "Romania"
   }
   
-  print(c(ctry[i], ctry_longname))
+  print(c(ctry[i], ctry_long))
   system(paste0("zip -r  grids/SWI/",ctry[i], ".zip grids/SWI/",ctry[i]))
   
   RCurl::ftpUpload(
