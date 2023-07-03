@@ -74,8 +74,10 @@ dats3_all <- strsplit(files3, "RT0_|_GLOBE") %>% do.call(rbind,.) |> as_tibble()
 
 files <- c(files1, files2,files3)
 dats_all <- c(dats1_all, dats2_all, dats3_all)
-dats_all <- dats_all[!duplicated(dats_all)] 
+
 files <- files[!duplicated(dats_all)]
+dats_all <- strsplit(files, "/") %>% do.call(rbind,.) |> as_tibble() |> dplyr::select(8) |>
+  unlist() |> substr(1,8) |> as.Date("%Y%m%d")
 # selecteaza doar pe cele din ziua 1, care reprezinta ndvi pentru ultimele 30 de zile
 
 for (i in 1:length(files)) {
@@ -106,7 +108,7 @@ for (i in 1:length(files)) {
     
     ctry <- ctry_longname(names(exts[e]))
     
-    file_name <- paste0("LAI_", format(day, "%Y%m%d%H%M"))
+    file_name <- paste0("LAI_", format(day, "%Y%m%dXX"))
     file_path <- paste0("grids/LAI/",names(exts[e]),"/", format(day, "%Y"))
     if (!dir.exists(file_path)) dir.create(file_path, recursive = T)
     writeRaster(r_utm, paste0(file_path,"/", file_name, ".tif"), overwrite = T)
@@ -125,8 +127,9 @@ for (i in 1:length(files)) {
 
 
 
+r <- rast(list.files("grids/LAI/fr/", full.names = T, pattern = ".tif$", recursive = T))
+summary(as.vector(values(r)))
 
-system(paste0("cdo monmean ncs/fapar_ltser_10day.nc ncs/fapar_ltser_mon.nc"))
 
 
 
